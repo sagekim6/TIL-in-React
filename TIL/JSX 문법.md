@@ -1,21 +1,31 @@
 # JSX 문법
 - 자바스크립트의 확장 문법이고 자바스크립트와 html을 섞어서 쓸 수 있다.
-### 1. html과 다른 속성명  
+## 1. html과 다른 속성명  
 - 여러 단어로 조합한 속성명은 카멜케이스로 작성  
 ```onclick``` -> ```onClick```  
 ```onblur``` -> ```onBlur```  
 ```onFocus``` -> ```onFocus``` ...  
 하지만 비표준 속성을 다룰 때 사용하는 data- 속성은 html문법 그대로 작성한다.  
 
-### 2. 자바스크립트 예약어와 같은 속성명은 사용불가
-- HTML의 for의 경우에는 자바스크립트의 반복문 키워드 for와 겹치기 때문에 htmlFor로,  
-HTML의 class 속성도 자바스크립트의 클래스 키워드 class와 겹치기 때문에 className으로 작성한다.  
+## 2. 자바스크립트 예약어와 같은 속성명은 사용불가
+- HTML의 for의 경우에는 자바스크립트의 반복문 키워드 for와 겹치기 때문에 ```htmlFor```로,  
+HTML의 class 속성도 자바스크립트의 클래스 키워드 class와 겹치기 때문에 ```className```으로 작성한다.  
+```javascript
+function App(){
+  return 
+      <div>
+      // JSX에선 htmlFor로 작성한다
+      <label htmlFor="name">What is your name?</label>
+      <input id="name" placeholder="write your name" />
+    </div>
+}
+```
 
-### 3. Fragment
+## 3. Fragment
 - <u>반드시 하나의 태그로 감싸진 태그를 작성해야한다.</u> 이때 불필요한 태그가 추가될 수 있는데  
 ```<Fragment>``` 태그를 감싼뒤 추가해주면 ```<Fragment>```태그는 없어지고 자식 태그들만 추가된다.  
 - 그냥 빈 태그```<>```로 축약해서 사용가능  
 
-### 4. 자바스크립트 표현식 넣기
+## 4. 자바스크립트 표현식 넣기
 - 중괄호{}를 활용하면 자바스크립트 표현식을 넣을 수 있다.  
 - 속성값에도 따옴표 대신 중괄호를 사용한다.  
