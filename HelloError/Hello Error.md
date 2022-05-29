@@ -1,7 +1,5 @@
 ## `Uncaught TypeError: destroy is not a function`
 
-코드
-
 ```javascript
 // 영화 정보를 불러오는 함수
 const getMovies = async () => {
@@ -31,3 +29,34 @@ useEffect(() => {
   getMovies();
 }, []); // 문제 해결!
 ```
+
+## `TypeError: articles.map is not a function`
+
+```javascript
+// 영화 한편의 자세한 정보를 가져오는 함수
+function Details() {
+  const [loading, setLoading] = useState(true);
+  const [details, setDetails] = useState([]);
+
+  const { id } = useParams();
+  const getDetails = async () => {
+    const res = await fetch(`some kind of url with ${id}...`);
+    const json = await res.json();
+    setDetails(json.data.movie); // 여기가 문제!
+    setLoading(false);
+  };
+}
+
+useEffect(() => {
+  getDetails();
+}, []);
+```
+
+위 상황에서 `details.map()`을 하니 생긴 에러. 일단 <u>`map()`은 배열에만 사용할 수 있다</u>는 건 알고 있었는데 뭐가 문제 인지 잘 몰랐다.  
+알고 보니 내가 useState를 잘못 이해하고 있었다. 결국 `setDetails(json.data.movie)`안에 들어가는 저 데이터는 배열이 아니라 객체였고 각괄호[]로 감싸주니 해결되었다.
+
+```javascript
+setDetails([json.data.movie]);
+```
+
+나는 useState에 초기값으로 빈 배열을 넘겨주었으니 `setDetails`로 바꾼 값은 초기값으로 넘겨준 빈 배열에 담길거라 생각했고 그래서 당연히 `details`는 배열이라고 생각했는데 아니었다.
