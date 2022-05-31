@@ -1,25 +1,33 @@
 # Props
 
 - 리액트에서 컴포넌트에 속성을 지정할 수 있는데 이렇게 지정한 속성을 `Props`라고 한다.
-- `Props`는 Properties의 약자로 지정된 속성이 <b>하나의 객체로</b> 모여서 컴포넌트를 정의한 첫 번째 파라미터로 전달된다.
+- `Props`는 Properties의 약자로 지정된 속성이 <b>하나의 객체로</b> 모여서 컴포넌트를 정의한 함수의 첫 번째 파라미터로 전달된다.
+  - 디스트럭처링 문법을 사용해서 `props.`을 생략할 수도 있다.
+- 상위 컴포넌트가 하위 컴포넌트에 속성을 전달한다.  
+  -> 하위 컴포넌트에선 Props는 읽기 전용값이다.
 
 ```javascript
-// 컴포넌트에 text prop을 넘겨준다
-function Button({ text }) {
+import React from "react";
+
+// <하위 컴포넌트>
+// name과 color 속성을 부모 컴포넌트로 부터 전달 받는다.
+function Greeting({ name, color }) {
   return (
-    <>
-      <button>{text}</button>
-    </>
+    <div>
+      <h1 style={{ color: color }}>Hello, {name}!</h1>
+    </div>
   );
 }
 
+// <상위 컴포넌트>
 function App() {
   return (
-    <>
-      <h1>Hello World</h1>
-      <Button text="Click me!" /> // text 속성 추가
-    </>
-  );
+    <main>
+      <Greeting name="Sage" color="pink" />
+      <Greeting name="Sese" color="blue" />
+      <Greeting name="Kim" color="grey" />
+    </main>
+  ); // Greeting 컴포넌트를 정의하고 그 안에 속성을 전달한다.
 }
 
 export default App;
@@ -99,8 +107,8 @@ export default App;
 
 ## `React.PropTypes`
 
-- props의 타입을 검사하여 잘못된 타입의 prop이 입력되는지 체크한다.
-- `prop-types`에서 `PropTypes`을 import하여 사용
+- props의 타입을 검사하여 잘못된 타입의 prop이 입력되는지 체크하여 버그를 예방한다.
+- `prop-types`에서 `PropTypes`을 import하여 사용한다.
 
 ```javascript
 import PropTypes from "prop-types"; // 1. PropTypes를 import
@@ -121,9 +129,10 @@ Button.propTypes = {
 
 function App() {
   return (
+    // text prop은 문자열을 받아야하지만 숫자를 받고 있다.
+    // -> Warning: Failed prop type 콘솔에 에러 띄워준다
     <>
       <h1>Hello World</h1>
-      <!-- text prop은 문자열을 받아야하지만 숫자를 받고 있다. -> Warning: Failed prop type 콘솔에 에러 띄워준다 -->
       <Button text={1} fontSize={23} />
     </>
   );
