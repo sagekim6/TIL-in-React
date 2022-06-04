@@ -6,7 +6,7 @@
 - 해당 컴포넌트의 랜더링 완료 후에 실행  
   -> `useMemo()`는 랜더링 중에 실행되는 차이가 있다.
 
-### 1. import 해주기
+## 1. import 해주기
 
 - `useEffect`를 사용하기 위해선 제일 먼저 import를 해줘야한다.
 
@@ -14,7 +14,7 @@
 import { useEffect } from "react";
 ```
 
-### 2. deps 자리에 빈 배열을 넣게 되면
+## 2. deps 자리에 빈 배열을 넣게 되면
 
 - 검사하고자 하는 특정값이 비어있기 때문에 한번만 랜더링되고 더이상 랜더링 되지 않는다.
 
@@ -32,7 +32,7 @@ useEffect(() => {
 }); // 두번째 인자 생략
 ```
 
-### cleanUp Function
+## cleanUp Function
 
 ```javascript
 import { useEffect, useState } from "react";
