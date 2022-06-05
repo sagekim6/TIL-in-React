@@ -74,6 +74,8 @@ export default App;
 setter 함수에 콜백을 넘겨주는 방식으로 state값을 변경한다.  
 count 값은 어디서나 변경될 수 있지만 아래 함수의 <u>current 파라미터는 항상 현재 state값을 나타내기</u> 때문에 안전하다.
 
+- 비동기로 state값을 변경할 때 사용하기
+
 ```javascript
 const increase = () => {
   // setter 함수에 콜백 전달
