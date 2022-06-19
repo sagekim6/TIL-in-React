@@ -1,22 +1,23 @@
 # useRef() Hook
 
-DOM요소의 접근에 접근하기 위해 사용되는 React Hook이다. DOM을 직접 선택할 때 사용한다.  
+DOM요소의 접근에 접근하기 위해 사용되는 React Hook이다. DOM을 직접 선택할 때 사용한다.
 
 1. `useRef` 훅을 import 해준다
+
 ```javascript
 import { useRef } from "react";
 ```
 
 2. `useRef` 함수를 호출해서 반환값을 변수에 저장한다.
-  - `useRef` 함수는 `React.MutableRefObject`를 반환하는데 html DOM요소에 접근할 수 있도록 한다.  
+
+- `useRef` 함수는 `React.MutableRefObject`를 반환하는데 html DOM요소에 접근할 수 있도록 한다.
 
 ```javascript
-function DiaryEditor(){
-  const autherInput = useRef(); 
+function DiaryEditor() {
+  const autherInput = useRef();
   const contentInput = useRef();
-  
+
   // ...다른 코드
-  
 }
 ```
 
@@ -45,6 +46,7 @@ const DiaryEditor = () => {
   );
 };
 ```
+
 ## `current` 프로퍼티
 
 `useRef` 함수는 `current` 프로퍼티를 가지는데 이 속성은 우리가 선택하고자 하는 DOM 요소를 가리킨다.
@@ -53,7 +55,7 @@ const DiaryEditor = () => {
 const DiaryEditor = () => {
   const autherInput = useRef();
   const contentInput = useRef();
-  
+
   const [state, setState] = useState({
     auther: "",
     content: "",
