@@ -1,0 +1,112 @@
+# React Lifecycle 제어하기 - useEffect
+
+`Lifecycle` : '생애주기'란 뜻으로 프로그램의 실행과 종료 혹은 <i>컴포넌트를 생성하고 종료하는 주기를 말한다.</i>
+
+<b>컴포넌트 생성(Mount):화면에 나타남 &rarr; 업데이트(Update):리렌더링 &rarr; 컴포넌트 종료(Unmount):화면에서 사라짐</b>
+
+## 컴포넌트의 생애주기를 `useEffect`를 사용하여 제어하기
+
+### 컴포넌트 생성(`Mount`)
+
+- `useEffect`의 <u>의존성 배열을 빈 배열로</u> 두면 컴포넌트가 생성될 때 한번만 실행된다.
+
+```javascript
+import { useEffect, useState } from "react";
+
+const Lifecycle = () => {
+  const [count, setCount] = useState(0);
+  const [text, setText] = useState("");
+
+  useEffect(() => {
+    console.log("mount");
+  }, []); // 의존성 배열 : 빈 배열
+
+  return (
+    <div style={{ padding: 20 }}>
+      <div>
+        {count}
+        <br />
+        <button onClick={() => setCount(count + 1)}>+</button>
+      </div>
+      <div>
+        <input value={text} onChange={(e) => setText(e.target.value)} />
+      </div>
+    </div>
+  );
+};
+
+export default Lifecycle;
+```
+
+### 업데이트(`Update`)
+
+- `useEffect`의 의존성 <u>배열을 아예 생략하거나 혹은 추적하고자하는 값을 넣어준다.</u>  
+  의존성 배열이 아예 생략되면 컴포넌트가 리렌더링 될 때마다 콜백이 실행되고 배열에 값이 있는 경우라면  
+  해당 값이 변할 때마다 콜백이 실행되면서 리렌더링된다.
+
+```javascript
+import { useEffect, useState } from "react";
+
+const Lifecycle = () => {
+  const [count, setCount] = useState(0);
+  const [text, setText] = useState("");
+
+  useEffect(() => {
+    console.log("update");
+  });
+
+  useEffect(() => {
+    console.log(`count is update: ${count}`);
+  }, [count]);
+
+  return (
+    <div style={{ padding: 20 }}>
+      <div>
+        {count}
+        <br />
+        <button onClick={() => setCount(count + 1)}>+</button>
+      </div>
+      <div>
+        <input value={text} onChange={(e) => setText(e.target.value)} />
+      </div>
+    </div>
+  );
+};
+
+export default Lifecycle;
+```
+
+### 컴포넌트 종료(`Unmount`)
+
+- `useEffect`의 cleanUp 함수를 이용하면 unmount되는 시점을 제어할 수 있다.
+
+```javascript
+import { useEffect, useState } from "react";
+
+const Unmount = () => {
+  useEffect(() => {
+    console.log("Mount");
+
+    return () => {
+      // Ummount 시점에 실행됨
+      console.log("Unmount");
+    };
+  }, []);
+
+  return <div>Unmount Testing Component</div>;
+};
+
+const Lifecycle = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const toggle = () => setIsVisible(!isVisible);
+
+  return (
+    <div style={{ padding: 20 }}>
+      <button onClick={toggle}>ON/OFF</button>
+      {isVisible && <Unmount />}
+    </div>
+  );
+};
+
+export default Lifecycle;
+```
