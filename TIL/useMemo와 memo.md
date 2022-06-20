@@ -3,8 +3,14 @@
 <b>공통점</b>: 둘다 props가 변하지않고 동일하다면 이전에 메모이즈된 결과를 반환한다.
 
 ## `React.memo()` 함수
+- `React.memo()`는 고차 컴포넌트(Higher Order Component)이다.  
+  -  고차 컴포넌트(Higher Order Component) : 고차 컴포넌트는 컴포넌트를 가져와 새 컴포넌트를 반환하는 함수이다.  
+- `React.memo()`는 말 그대로 <u>함수</u>이며 컴포넌트를 인자로 받아 새로운 컴포넌트를 리턴한다.  
 
-- `React.memo()`는 말 그대로 함수이며 컴포넌트를 인자로 받아 새로운 컴포넌트를 리턴한다.
+```javascript
+const EnhancedComponent = higherOrderComponent(WrappedComponent);
+// 고차 함수로 다른 컴포넌트를 래핑해서 사용하는 형태
+```
 
 ```javascript
 import { useState } from "react";
@@ -42,12 +48,13 @@ export default App;
 
 ## `useMemo(callback, [dependencies])` Hook
 
-- `useMemo`는 <u>Memoized value</u>를 리턴하는 Hook이다.  
+- `useMemo`는 Memoized value를 리턴하는 <u>리액트 Hook이다.</u>  
   
 <b>What is Memoized value?</b> - 함수에 특정값의 호출결과를 기억해 놓은 값  
-- Memoization: 최적화를 위해 사용하는 개념이다. 비용이 높은 즉, 연산량이 많은 함수의 호출 결과를 저장해놨다가 같은 입력값으로  
+- <b>Memoization</b>: 최적화를 위해 사용하는 개념이다. 비용이 높은 즉, 연산량이 많은 함수의 호출 결과를 저장해놨다가 같은 입력값으로  
   함수를 호출했을 때 함수를 새로 호출하지 않고 이전에 저장해 놨던 호출 결과를 바로 반환하는 것이다.  
   -> 불필요한 연산을 줄일 수 있고 값을 받는 시간도 빨라진다.  
+  
 - 의존성 배열의 값이 변하게 되면 콜백이 실행되고 그렇지 않으면 기존 함수의 결과값을 그대로 반환한다.
 - 의존성 배열을 넣지 않을 경우, 매 렌더링마다 함수가 실행되기 때문에 의존성 배열은 필수이며 의존성 배열이 빈 배열인 경우, 컴포넌트 마운트(생성) 시에만 호출 된다.  
 - 렌더링이 일어나는 동안 실행된다.  
