@@ -105,38 +105,64 @@ function App() {
 export default App;
 ```
 
-## `React.PropTypes`
+### `memo()` 함수로 객체 최적화하기
 
-- props의 타입을 검사하여 잘못된 타입의 prop이 입력되는지 체크하여 버그를 예방한다.
-- `prop-types`에서 `PropTypes`을 import하여 사용한다.
+객체는 안에 내용이 같더라도 참조값이 다르면 다른 값으로 본다(얕은 비교를 한다).  
+그래서 객체를 최적화하려면 비교함수를 정의하여 인자를 넘겨주어야한다.
 
 ```javascript
-import PropTypes from "prop-types"; // 1. PropTypes를 import
+import { useEffect, useState, memo } from "react";
 
-function Button({ text, fontSize }) {
-  return (
-    <>
-      <button style={{ fontSize }}>{text}</button>
-    </>
-  );
-}
+// CounterA 컴포넌트
+const CounterA = memo(({ count }) => {
+  useEffect(() => {
+    console.log("Counter A Updated: ", count);
+  });
 
-// Button 컴포넌트의 proptype을 지정해준다
-Button.propTypes = {
-  text: PropTypes.string,
-  fontSize: PropTypes.number,
+  return <div>{count}</div>;
+});
+
+// CounterB 컴포넌트
+const CounterB = ({ obj }) => {
+  useEffect(() => {
+    console.log("Counter B Updated: ", obj.count);
+  });
+
+  return <div>{obj.count}</div>;
 };
 
-function App() {
+// 비교함수
+const areEqual = (prevProps, nextProps) => {
+  if (prevProps.obj.count === nextProps.obj.count) {
+    return true;
+  }
+  return false;
+};
+
+// CounterB 컴포넌트와 비교함수를 memo 함수의 인자로 넘겨준다.
+const MemoizedCounterB = memo(CounterB, areEqual);
+
+function OptimizeTest() {
+  const [count, setCount] = useState(1);
+  const [obj, setObj] = useState({
+    count: 1,
+  });
+
   return (
-    // text prop은 문자열을 받아야하지만 숫자를 받고 있다.
-    // -> Warning: Failed prop type 콘솔에 에러 띄워준다
-    <>
-      <h1>Hello World</h1>
-      <Button text={1} fontSize={23} />
-    </>
+    <div style={{ padding: 50 }}>
+      <div>
+        <h2>Counter A</h2>
+        <CounterA count={count} />
+        <button onClick={() => setCount(count)}>A button</button>
+      </div>
+      <div>
+        <h2>Counter B</h2>
+        <MemoizedCounterB obj={obj} /> <!-- memo함수가 할당된 변수를 컴포넌트로 사용한다. -->
+        <button onClick={() => setObj({ count: obj.count })}>B button</button>
+      </div>
+    </div>
   );
 }
 
-export default App;
+export default OptimizeTest;
 ```
