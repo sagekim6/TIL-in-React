@@ -1,4 +1,6 @@
-## `Uncaught TypeError: destroy is not a function`
+# `TypeError`와 `somthing is not a function`모음
+
+## 1. `Uncaught TypeError: destroy is not a function`
 
 ```javascript
 // 영화 정보를 불러오는 함수
@@ -30,7 +32,7 @@ useEffect(() => {
 }, []); // 문제 해결!
 ```
 
-## `TypeError: articles.map is not a function`
+## 2. `TypeError: articles.map is not a function`
 
 ```javascript
 // 영화 한편의 자세한 정보를 가져오는 함수
